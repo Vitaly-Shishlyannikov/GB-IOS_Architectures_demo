@@ -16,6 +16,7 @@ final class SearchView: UIView {
     let tableView = UITableView()
     let emptyResultView = UIView()
     let emptyResultLabel = UILabel()
+    let throbber = UIActivityIndicatorView(style: .gray)
     
     // MARK: - Init
     
@@ -36,7 +37,13 @@ final class SearchView: UIView {
         self.addSearchBar()
         self.addTableView()
         self.addEmptyResultView()
+        self.addImageViewThrobber()
         self.setupConstraints()
+    }
+    
+    private func addImageViewThrobber() {
+        self.throbber.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(self.throbber)
     }
     
     private func addSearchBar() {
@@ -88,7 +95,9 @@ final class SearchView: UIView {
             self.emptyResultView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor),
             self.emptyResultLabel.topAnchor.constraint(equalTo: self.emptyResultView.topAnchor, constant: 12.0),
             self.emptyResultLabel.leadingAnchor.constraint(equalTo: self.emptyResultView.leadingAnchor),
-            self.emptyResultLabel.trailingAnchor.constraint(equalTo: self.emptyResultView.trailingAnchor)
+            self.emptyResultLabel.trailingAnchor.constraint(equalTo: self.emptyResultView.trailingAnchor),
+            self.throbber.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            self.throbber.centerYAnchor.constraint(equalTo: self.centerYAnchor)
             ])
     }
 }

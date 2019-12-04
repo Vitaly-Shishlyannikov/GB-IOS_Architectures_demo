@@ -41,14 +41,14 @@ final class SearchViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        self.throbber(show: false)
+//        self.throbber(show: true)
     }
     
     // MARK: - Private
     
-    private func throbber(show: Bool) {
-        UIApplication.shared.isNetworkActivityIndicatorVisible = show
-    }
+//    private func throbber(show: Bool) {
+//        UIApplication.shared.isNetworkActivityIndicatorVisible = show
+//    }
     
     private func showError(error: Error) {
         let alert = UIAlertController(title: "Error", message: "\(error.localizedDescription)", preferredStyle: .alert)
@@ -66,13 +66,13 @@ final class SearchViewController: UIViewController {
     }
     
     private func requestApps(with query: String) {
-        self.throbber(show: true)
+        self.searchView.throbber.startAnimating()
         self.searchResults = []
         self.searchView.tableView.reloadData()
         
         self.searchService.getApps(forQuery: query) { [weak self] result in
             guard let self = self else { return }
-            self.throbber(show: false)
+            self.searchView.throbber.stopAnimating()
             result
                 .withValue { apps in
                     guard !apps.isEmpty else {
