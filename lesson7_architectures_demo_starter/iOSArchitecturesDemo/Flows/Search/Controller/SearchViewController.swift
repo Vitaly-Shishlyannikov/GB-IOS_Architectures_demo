@@ -10,7 +10,7 @@ import UIKit
 
 final class SearchViewController: UIViewController {
     
-    // MARK: - Private Properties
+    // MARK: - Pvarate Properties
     
     private var searchView: SearchView {
         return self.view as! SearchView
@@ -120,7 +120,7 @@ extension SearchViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let app = searchResults[indexPath.row]
-        let appDetaillViewController = AppDetailViewController()
+        let appDetaillViewController = AppDetailViewController(app: app)
         appDetaillViewController.app = app
         navigationController?.pushViewController(appDetaillViewController, animated: true)
     }
