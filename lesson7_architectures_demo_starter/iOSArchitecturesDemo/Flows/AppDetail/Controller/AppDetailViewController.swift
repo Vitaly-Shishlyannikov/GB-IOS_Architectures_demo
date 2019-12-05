@@ -13,6 +13,7 @@ final class AppDetailViewController: UIViewController {
     var app: ITunesApp
     
     lazy var headerViewController = AppDetailHeaderViewController(app: self.app)
+    lazy var whatsNewBlockViewController = WhatsNewBlockViewController(app: self.app)
     
      // MARK: - Init
     
@@ -39,6 +40,7 @@ final class AppDetailViewController: UIViewController {
         self.navigationController?.navigationBar.tintColor = UIColor.white;
         self.navigationItem.largeTitleDisplayMode = .never
         self.addHeaderViewController()
+        self.addWhatsNewBlockViewController()
         self.addDescriptionViewController()
     }
     
@@ -53,6 +55,18 @@ final class AppDetailViewController: UIViewController {
             self.headerViewController.view.leftAnchor.constraint(equalTo: self.view.leftAnchor),
             self.headerViewController.view.rightAnchor.constraint(equalTo: self.view.rightAnchor)
             ])
+    }
+    
+    private func addWhatsNewBlockViewController() {
+        self.addChild(self.whatsNewBlockViewController)
+        self.view.addSubview(self.whatsNewBlockViewController.view)
+        self.whatsNewBlockViewController.didMove(toParent: self)
+    self.whatsNewBlockViewController.view.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            self.whatsNewBlockViewController.view.topAnchor.constraint(equalTo: self.headerViewController.view.bottomAnchor, constant: 16.0),
+            self.whatsNewBlockViewController.view.leftAnchor.constraint(equalTo: self.view.leftAnchor),
+            self.whatsNewBlockViewController.view.rightAnchor.constraint(equalTo: self.view.rightAnchor)
+                ])
     }
     
     private func addDescriptionViewController() {

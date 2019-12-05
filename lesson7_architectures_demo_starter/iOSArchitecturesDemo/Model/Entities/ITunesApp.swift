@@ -23,6 +23,10 @@ public struct ITunesApp: Codable {
     public let iconUrl: String?
     public let screenshotUrls: [String]
     
+    public let version: String?
+    public let versionDate: String?
+    public let releaseNotes: String?
+    
     // MARK: - Codable
     
     private enum CodingKeys: String, CodingKey {
@@ -36,6 +40,9 @@ public struct ITunesApp: Codable {
         case size = "fileSizeBytes"
         case iconUrl = "artworkUrl512"
         case screenshotUrls = "screenshotUrls"
+        case version = "version"
+        case versionDate = "currentVersionReleaseDate"
+        case releaseNotes = "releaseNotes"
     }
     
     public init(from decoder: Decoder) throws {
@@ -50,6 +57,9 @@ public struct ITunesApp: Codable {
         self.size = (try? container.decode(String.self, forKey: .size)) >>- { Bytes($0) }
         self.iconUrl = try? container.decode(String.self, forKey: .iconUrl)
         self.screenshotUrls = (try? container.decode([String].self, forKey: .screenshotUrls)) ?? []
+        self.version = try? container.decode(String.self, forKey: .version)
+        self.versionDate = try? container.decode(String.self, forKey: .versionDate)
+        self.releaseNotes = try? container.decode(String.self, forKey: .releaseNotes)
     }
     
     // MARK: - Init
@@ -63,7 +73,10 @@ public struct ITunesApp: Codable {
                   averageRatingForCurrentVersion: Float?,
                   size: Bytes?,
                   iconUrl: String?,
-                  screenshotUrls: [String]) {
+                  screenshotUrls: [String],
+                  version: String,
+                  versionDate: String,
+                  releaseNotes: String) {
         self.appName = appName
         self.appUrl = appUrl
         self.company = company
@@ -74,5 +87,22 @@ public struct ITunesApp: Codable {
         self.size = size
         self.iconUrl = iconUrl
         self.screenshotUrls = screenshotUrls
+        self.version = version
+        self.versionDate = versionDate
+        self.releaseNotes = releaseNotes
+    }
+    
+    // MARK: - Functions
+    
+    private func dateFromString() -> Date? {
+        let dateFormatter = ISO8601DateFormatter()
+        guard let versionDate = versionDate else {return Date()}
+        let date = dateFormatter.date(from: versionDate)
+        return date
+    }
+    
+    func getDateInterval() -> String {
+        guard let date = self.dateFromString() else {return "unknown date"}
+        return Date.timeAgoSinceDate(date: date)
     }
 }
