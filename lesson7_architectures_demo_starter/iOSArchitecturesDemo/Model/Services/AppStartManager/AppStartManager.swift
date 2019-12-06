@@ -17,22 +17,10 @@ final class AppStartManager {
     }
     
     func start() {
-        let rootVC = SearchModuleBuilder.build()
-        rootVC.navigationItem.title = "Search via iTunes"
+                
+        let tabBarController = TabBarController()
         
-        let navVC = self.configuredNavigationController
-        navVC.viewControllers = [rootVC]
-        
-        window?.rootViewController = navVC
+        window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()
     }
-    
-    private lazy var configuredNavigationController: UINavigationController = {
-        let navVC = UINavigationController()
-        navVC.navigationBar.barTintColor = UIColor.varna
-        navVC.navigationBar.isTranslucent = false
-        navVC.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-        navVC.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-        return navVC
-    }()
 }
