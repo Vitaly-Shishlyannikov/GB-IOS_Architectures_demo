@@ -7,12 +7,13 @@
 //
 
 import UIKit
+import SDWebImage
 
 final class SearchMusicViewController: UIViewController {
     
     // MARK: - Pvarate Properties
     
-    private var searchView: SearchMusicView {
+    var searchView: SearchMusicView {
         return self.view as! SearchMusicView
     }
     
@@ -72,8 +73,15 @@ extension SearchMusicViewController: UITableViewDataSource {
             return dequeuedCell
         }
         let song = self.searchResults[indexPath.row]
-        let cellModel = SongCellModelFactory.cellModel(from: song)
-        cell.configure(with: cellModel)
+        
+        var cellModel = SongCellModelFactory.cellModel(from: song)
+        
+        DispatchQueue.global(qos: .default).async {
+            cellModel = SongCellModelFactory.cellModel(from: song)
+            DispatchQueue.main.async {
+                cell.configure(with: cellModel)
+            }
+        }
         return cell
     }
 }
@@ -117,5 +125,9 @@ extension SearchMusicViewController: SearchMusicViewInput {
     
     func stopThrobber() {
         self.searchView.throbber.stopAnimating()
+    }
+    
+    func reloadRow(at indexPath: IndexPath) {
+        self.searchView.tableView.reloadRows(at: [indexPath], with: .none)
     }
 }

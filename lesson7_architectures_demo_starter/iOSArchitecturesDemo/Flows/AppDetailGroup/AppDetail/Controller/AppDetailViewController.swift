@@ -14,6 +14,7 @@ final class AppDetailViewController: UIViewController {
     
     lazy var headerViewController = AppDetailHeaderViewController(app: self.app)
     lazy var whatsNewBlockViewController = WhatsNewBlockViewController(app: self.app)
+    lazy var screenShotsViewController = AppScreenshotsViewController(app: self.app)
     
      // MARK: - Init
     
@@ -41,6 +42,7 @@ final class AppDetailViewController: UIViewController {
         self.navigationItem.largeTitleDisplayMode = .never
         self.addHeaderViewController()
         self.addWhatsNewBlockViewController()
+        self.addScreenshotsViewController()
         self.addDescriptionViewController()
     }
     
@@ -67,6 +69,18 @@ final class AppDetailViewController: UIViewController {
             self.whatsNewBlockViewController.view.leftAnchor.constraint(equalTo: self.view.leftAnchor),
             self.whatsNewBlockViewController.view.rightAnchor.constraint(equalTo: self.view.rightAnchor)
                 ])
+    }
+    
+    private func addScreenshotsViewController() {
+        self.addChild(self.screenShotsViewController)
+        self.view.addSubview(self.screenShotsViewController.view)
+        self.screenShotsViewController.didMove(toParent: self)
+        self.screenShotsViewController.view.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            self.screenShotsViewController.view.topAnchor.constraint(equalTo: self.whatsNewBlockViewController.view.bottomAnchor, constant: 16.0),
+            self.screenShotsViewController.view.leftAnchor.constraint(equalTo: self.view.leftAnchor),
+            self.screenShotsViewController.view.rightAnchor.constraint(equalTo: self.view.rightAnchor)
+            ])
     }
     
     private func addDescriptionViewController() {

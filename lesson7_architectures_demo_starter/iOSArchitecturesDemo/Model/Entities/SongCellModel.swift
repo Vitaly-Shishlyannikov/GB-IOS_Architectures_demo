@@ -27,7 +27,6 @@ final class SongCellModelFactory {
                 image = UIImage(data: data)!
             }
         
-        
         return SongCellModel(trackName: model.trackName,
                             artistName: model.artistName,
                             collectionName: model.collectionName,

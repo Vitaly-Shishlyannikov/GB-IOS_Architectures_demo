@@ -29,6 +29,8 @@ final class SearchMusicPresenter {
     
     private let searchService = ITunesSearchService()
     
+    private let imageDownloader = ImageDownloader()
+    
     private func requestSongs(with query: String) {
         self.searchService.getSongs(forQuery: query) { [weak self] result in
             guard let self = self else { return }
@@ -51,6 +53,7 @@ final class SearchMusicPresenter {
 }
 
 extension SearchMusicPresenter: SearchMusicViewOutput {
+    
     func viewDidSearch(with query: String) {
         self.viewInput?.startThrobber()
         self.requestSongs(with: query)
