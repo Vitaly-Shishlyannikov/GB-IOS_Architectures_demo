@@ -26,12 +26,19 @@ protocol searchViewOutput: class {
 
 final class SearchPresenter {
     
+    let interactor: SearchInteractor
+    
+    let router: SearchRouter
+    
     weak var viewInput: (UIViewController & SearchViewInput)?
     
-    private let searchService = ITunesSearchService()
+    init(interactor: SearchInteractorInput, router: SearchRouterInput) {
+        self.interactor = interactor as! SearchInteractor
+        self.router = router as! SearchRouter
+    }
     
     private func requestApps(with query: String) {
-        self.searchService.getApps(forQuery: query) { [weak self] result in
+        self.interactor.requestApps(with: query) { [weak self] result in
             guard let self = self else { return }
             self.viewInput?.stopThrobber()
             result
@@ -63,6 +70,6 @@ extension SearchPresenter: searchViewOutput {
     }
     
     func viewDidSelectApp(_ app: ITunesApp) {
-        self.openAppDetails(with: app)
+        self.router.openDetails(for: app)
     }
 }
