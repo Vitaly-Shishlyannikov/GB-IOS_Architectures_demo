@@ -26,15 +26,15 @@ protocol searchViewOutput: class {
 
 final class SearchPresenter {
     
-    let interactor: SearchInteractor
+    let interactor: SearchInteractorInput
     
-    let router: SearchRouter
+    let router: SearchRouterInput
     
     weak var viewInput: (UIViewController & SearchViewInput)?
     
     init(interactor: SearchInteractorInput, router: SearchRouterInput) {
-        self.interactor = interactor as! SearchInteractor
-        self.router = router as! SearchRouter
+        self.interactor = interactor
+        self.router = router
     }
     
     private func requestApps(with query: String) {

@@ -25,14 +25,21 @@ protocol SearchMusicViewOutput: class {
 
 final class SearchMusicPresenter {
     
-    weak var viewInput: (UIViewController & SearchMusicViewInput)?
+    let interactor: SearchMusicInteractorInput
     
-    private let searchService = ITunesSearchService()
+    let router: SearchMusicRouterInput
+    
+    weak var viewInput: (UIViewController & SearchMusicViewInput)?
     
     private let imageDownloader = ImageDownloader()
     
+    init(interactor: SearchMusicInteractorInput, router: SearchMusicRouterInput) {
+        self.interactor = interactor
+        self.router = router
+    }
+    
     private func requestSongs(with query: String) {
-        self.searchService.getSongs(forQuery: query) { [weak self] result in
+        self.interactor.requestSongs(with: query) { [weak self] result in
             guard let self = self else { return }
             self.viewInput?.stopThrobber()
             result

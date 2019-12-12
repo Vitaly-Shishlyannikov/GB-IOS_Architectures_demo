@@ -72,11 +72,9 @@ extension SearchMusicViewController: UITableViewDataSource {
             return dequeuedCell
         }
         let song = self.searchResults[indexPath.row]
-        
-        var cellModel = SongCellModelFactory.cellModel(from: song)
-        
+
         DispatchQueue.global(qos: .default).async {
-            cellModel = SongCellModelFactory.cellModel(from: song)
+            let cellModel = SongCellModelFactory.cellModel(from: song)
             DispatchQueue.main.async {
                 cell.configure(with: cellModel)
             }

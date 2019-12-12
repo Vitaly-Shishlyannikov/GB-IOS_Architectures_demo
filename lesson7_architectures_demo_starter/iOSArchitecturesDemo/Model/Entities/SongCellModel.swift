@@ -21,16 +21,22 @@ final class SongCellModelFactory {
     
     static func cellModel(from model: ITunesSong) -> SongCellModel {
         
-        var image = UIImage()
-        let url = URL(string: model.artworkURL!)
-        if let data = try? Data(contentsOf: url!) {
-                image = UIImage(data: data)!
-            }
+        let image = self.loadImage(model: model)
         
         return SongCellModel(trackName: model.trackName,
                             artistName: model.artistName,
                             collectionName: model.collectionName,
                             collectionImage: image)
+    }
+    
+    static func loadImage(model: ITunesSong) -> UIImage {
+        guard let songUrl = model.artworkURL,
+              let url = URL(string: songUrl) else {return UIImage()}
+        
+        guard let data = try? Data(contentsOf: url),
+              let image = UIImage(data: data) else {return UIImage()}
+        
+        return image
     }
 }
 
