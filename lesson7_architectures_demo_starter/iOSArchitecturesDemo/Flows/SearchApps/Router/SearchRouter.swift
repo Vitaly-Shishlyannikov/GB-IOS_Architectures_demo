@@ -23,6 +23,9 @@ final class SearchRouter: SearchRouterInput {
         
         let appDetailViewController = AppDetailViewController(app: app)
     self.viewController?.navigationController?.pushViewController(appDetailViewController, animated: true)
+        
+        print(viewController?.navigationController as Any)
+
     }
     
     func openAppInItunes(_ app: ITunesApp) {

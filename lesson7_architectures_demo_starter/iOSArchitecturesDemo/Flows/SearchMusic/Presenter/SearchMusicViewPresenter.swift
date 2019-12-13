@@ -21,6 +21,7 @@ protocol SearchMusicViewInput: class {
 protocol SearchMusicViewOutput: class {
     
     func viewDidSearch(with query: String)
+    func viewDidSelectSong(_ song: ITunesSong)
 }
 
 final class SearchMusicPresenter {
@@ -64,6 +65,10 @@ extension SearchMusicPresenter: SearchMusicViewOutput {
     func viewDidSearch(with query: String) {
         self.viewInput?.startThrobber()
         self.requestSongs(with: query)
+    }
+    
+    func viewDidSelectSong(_ song: ITunesSong) {
+        self.router.openSongDetails(for: song)
     }
 }
 

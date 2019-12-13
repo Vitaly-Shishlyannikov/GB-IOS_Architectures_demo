@@ -52,6 +52,7 @@ final class SearchMusicViewController: UIViewController {
         self.searchView.searchBar.delegate = self
         self.searchView.tableView.register(SongCell.self, forCellReuseIdentifier: Constants.reuseIdentifier)
         self.searchView.tableView.dataSource = self
+        self.searchView.tableView.delegate = self
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -80,6 +81,16 @@ extension SearchMusicViewController: UITableViewDataSource {
             }
         }
         return cell
+    }
+}
+
+//MARK: - UITableViewDelegate
+extension SearchMusicViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        let song = searchResults[indexPath.row]
+        self.presenter.viewDidSelectSong(song)
     }
 }
 

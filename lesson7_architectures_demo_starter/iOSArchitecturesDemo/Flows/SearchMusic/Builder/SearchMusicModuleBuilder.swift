@@ -18,6 +18,7 @@ final class SearchMusicModuleBuilder {
         let viewController = SearchMusicViewController(presenter: presenter)
         
         presenter.viewInput = viewController
+        router.viewController = viewController
         
         return viewController
     }
